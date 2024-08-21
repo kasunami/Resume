@@ -1,0 +1,16 @@
+spring:
+  application.name: Resume
+  datasource:
+    url: jdbc:postgresql://localhost:5432/my_project_db
+    driver-class-name: org.postgresql.Driver
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+  flyway:
+    locations: classpath:db/migration
+
+  jpa:
+    hibernate:
+      ddl-auto: update
