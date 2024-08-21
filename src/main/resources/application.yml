@@ -1,7 +1,7 @@
 spring:
   application.name: Resume
   datasource:
-    url: jdbc:postgresql://localhost:5432/my_project_db
+    url: jdbc:postgresql://localhost:5432/postgres
     driver-class-name: org.postgresql.Driver
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
@@ -14,3 +14,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs

@@ -8,10 +8,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
+@Data
 @Entity
 @Table(name = "education")
 public class Education {

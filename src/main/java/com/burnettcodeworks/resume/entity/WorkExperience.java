@@ -14,11 +14,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+@Data
 @Entity
 @Table(name = "work_experience")
 public class WorkExperience {
