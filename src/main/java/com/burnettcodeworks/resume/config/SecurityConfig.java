@@ -27,8 +27,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/").permitAll() // Allow access to the home page without authentication
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll() // Allow all requests without authentication
                 )
                 .oauth2Login(withDefaults()); // Enable OAuth2/OIDC login
         return http.build();
