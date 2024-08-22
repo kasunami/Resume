@@ -1,6 +1,8 @@
 package com.burnettcodeworks.resume.service;
 
+import com.burnettcodeworks.resume.dto.SkillDTO;
 import com.burnettcodeworks.resume.entity.Skill;
+import com.burnettcodeworks.resume.mapper.SkillMapper;
 import com.burnettcodeworks.resume.repository.SkillRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class SkillService {
@@ -18,14 +21,16 @@ public class SkillService {
         this.skillRepository = skillRepository;
     }
 
-    public Skill createSkill(Skill skill) {
-        return skillRepository.save(skill);
+    public SkillDTO createSkill(SkillDTO skillDTO) {
+        Skill skill = SkillMapper.toEntity(skillDTO);
+        return SkillMapper.toDTO(skillRepository.save(skill));
     }
 
-    public Skill updateSkill(UUID id, Skill updatedSkill) {
+    public SkillDTO updateSkill(UUID id, SkillDTO updatedSkillDTO) {
         verifyExistingSkill(id);
+        Skill updatedSkill = SkillMapper.toEntity(updatedSkillDTO);
         updatedSkill.setId(id);
-        return skillRepository.save(updatedSkill);
+        return SkillMapper.toDTO(skillRepository.save(updatedSkill));
     }
 
     public void deleteSkill(UUID id) {
@@ -33,12 +38,15 @@ public class SkillService {
         skillRepository.deleteById(id);
     }
 
-    public List<Skill> getAllSkills() {
-        return skillRepository.findAll();
+    public List<SkillDTO> getAllSkills() {
+        return skillRepository.findAll().stream()
+                .map(SkillMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    public Skill getSkillById(UUID id) {
-        return verifyExistingSkill(id);
+    public SkillDTO getSkillById(UUID id) {
+        Skill skill = verifyExistingSkill(id);
+        return SkillMapper.toDTO(skill);
     }
 
     private Skill verifyExistingSkill(UUID id) {

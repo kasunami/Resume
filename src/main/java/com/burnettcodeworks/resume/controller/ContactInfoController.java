@@ -1,6 +1,6 @@
 package com.burnettcodeworks.resume.controller;
 
-import com.burnettcodeworks.resume.entity.ContactInfo;
+import com.burnettcodeworks.resume.dto.ContactInfoDTO;
 import com.burnettcodeworks.resume.service.ContactInfoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,14 +27,14 @@ public class ContactInfoController {
     }
 
     @PostMapping
-    public ResponseEntity<ContactInfo> createContactInfo(@RequestBody ContactInfo contactInfo) {
-        ContactInfo createdContactInfo = contactInfoService.createContactInfo(contactInfo);
+    public ResponseEntity<ContactInfoDTO> createContactInfo(@RequestBody ContactInfoDTO contactInfoDTO) {
+        ContactInfoDTO createdContactInfo = contactInfoService.createContactInfo(contactInfoDTO);
         return new ResponseEntity<>(createdContactInfo, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ContactInfo> updateContactInfo(@PathVariable UUID id, @RequestBody ContactInfo contactInfo) {
-        ContactInfo updatedContactInfo = contactInfoService.updateContactInfo(id, contactInfo);
+    public ResponseEntity<ContactInfoDTO> updateContactInfo(@PathVariable UUID id, @RequestBody ContactInfoDTO contactInfoDTO) {
+        ContactInfoDTO updatedContactInfo = contactInfoService.updateContactInfo(id, contactInfoDTO);
         return new ResponseEntity<>(updatedContactInfo, HttpStatus.OK);
     }
 
@@ -45,14 +45,14 @@ public class ContactInfoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ContactInfo>> getAllContactInfo() {
-        List<ContactInfo> contactInfos = contactInfoService.getAllContactInfo();
+    public ResponseEntity<List<ContactInfoDTO>> getAllContactInfo() {
+        List<ContactInfoDTO> contactInfos = contactInfoService.getAllContactInfo();
         return new ResponseEntity<>(contactInfos, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ContactInfo> getContactInfoById(@PathVariable UUID id) {
-        ContactInfo contactInfo = contactInfoService.getContactInfoById(id);
+    public ResponseEntity<ContactInfoDTO> getContactInfoById(@PathVariable UUID id) {
+        ContactInfoDTO contactInfo = contactInfoService.getContactInfoById(id);
         return new ResponseEntity<>(contactInfo, HttpStatus.OK);
     }
 }

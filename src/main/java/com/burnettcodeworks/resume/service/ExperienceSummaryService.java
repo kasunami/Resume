@@ -1,11 +1,14 @@
 package com.burnettcodeworks.resume.service;
 
+import com.burnettcodeworks.resume.dto.ExperienceSummaryDTO;
 import com.burnettcodeworks.resume.entity.ExperienceSummary;
+import com.burnettcodeworks.resume.mapper.ExperienceSummaryMapper;
 import com.burnettcodeworks.resume.repository.ExperienceSummaryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ExperienceSummaryService {
@@ -16,24 +19,30 @@ public class ExperienceSummaryService {
         this.experienceSummaryRepository = experienceSummaryRepository;
     }
 
-    public ExperienceSummary createExperienceSummary(ExperienceSummary experienceSummary) {
-        return experienceSummaryRepository.save(experienceSummary);
+    public ExperienceSummaryDTO createExperienceSummary(ExperienceSummaryDTO experienceSummaryDTO) {
+        ExperienceSummary experienceSummary = ExperienceSummaryMapper.toEntity(experienceSummaryDTO);
+        return ExperienceSummaryMapper.toDTO(experienceSummaryRepository.save(experienceSummary));
     }
 
-    public ExperienceSummary updateExperienceSummary(UUID id, ExperienceSummary experienceSummary) {
+    public ExperienceSummaryDTO updateExperienceSummary(UUID id, ExperienceSummaryDTO experienceSummaryDTO) {
+        ExperienceSummary experienceSummary = ExperienceSummaryMapper.toEntity(experienceSummaryDTO);
         experienceSummary.setId(id);
-        return experienceSummaryRepository.save(experienceSummary);
+        return ExperienceSummaryMapper.toDTO(experienceSummaryRepository.save(experienceSummary));
     }
 
     public void deleteExperienceSummary(UUID id) {
         experienceSummaryRepository.deleteById(id);
     }
 
-    public List<ExperienceSummary> getAllExperienceSummaries() {
-        return experienceSummaryRepository.findAll();
+    public List<ExperienceSummaryDTO> getAllExperienceSummaries() {
+        return experienceSummaryRepository.findAll().stream()
+                .map(ExperienceSummaryMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    public ExperienceSummary getExperienceSummaryById(UUID id) {
-        return experienceSummaryRepository.findById(id).orElse(null);
+    public ExperienceSummaryDTO getExperienceSummaryById(UUID id) {
+        return experienceSummaryRepository.findById(id)
+                .map(ExperienceSummaryMapper::toDTO)
+                .orElse(null);
     }
 }

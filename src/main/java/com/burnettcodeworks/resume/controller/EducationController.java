@@ -1,6 +1,6 @@
 package com.burnettcodeworks.resume.controller;
 
-import com.burnettcodeworks.resume.entity.Education;
+import com.burnettcodeworks.resume.dto.EducationDTO;
 import com.burnettcodeworks.resume.service.EducationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,14 +27,14 @@ public class EducationController {
     }
 
     @PostMapping
-    public ResponseEntity<Education> createEducation(@RequestBody Education education) {
-        Education createdEducation = educationService.createEducation(education);
+    public ResponseEntity<EducationDTO> createEducation(@RequestBody EducationDTO educationDTO) {
+        EducationDTO createdEducation = educationService.createEducation(educationDTO);
         return new ResponseEntity<>(createdEducation, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Education> updateEducation(@PathVariable UUID id, @RequestBody Education education) {
-        Education updatedEducation = educationService.updateEducation(id, education);
+    public ResponseEntity<EducationDTO> updateEducation(@PathVariable UUID id, @RequestBody EducationDTO educationDTO) {
+        EducationDTO updatedEducation = educationService.updateEducation(id, educationDTO);
         return new ResponseEntity<>(updatedEducation, HttpStatus.OK);
     }
 
@@ -45,14 +45,14 @@ public class EducationController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Education>> getAllEducation() {
-        List<Education> educations = educationService.getAllEducation();
+    public ResponseEntity<List<EducationDTO>> getAllEducation() {
+        List<EducationDTO> educations = educationService.getAllEducation();
         return new ResponseEntity<>(educations, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Education> getEducationById(@PathVariable UUID id) {
-        Education education = educationService.getEducationById(id);
+    public ResponseEntity<EducationDTO> getEducationById(@PathVariable UUID id) {
+        EducationDTO education = educationService.getEducationById(id);
         return new ResponseEntity<>(education, HttpStatus.OK);
     }
 }

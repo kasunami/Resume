@@ -1,8 +1,7 @@
 package com.burnettcodeworks.resume.controller;
 
-import com.burnettcodeworks.resume.entity.Company;
+import com.burnettcodeworks.resume.dto.CompanyDTO;
 import com.burnettcodeworks.resume.service.CompanyService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,18 +20,21 @@ import java.util.UUID;
 @RequestMapping("/companies")
 public class CompanyController {
 
-    @Autowired
-    private CompanyService companyService;
+    private final CompanyService companyService;
+
+    public CompanyController(CompanyService companyService) {
+        this.companyService = companyService;
+    }
 
     @PostMapping
-    public ResponseEntity<Company> createCompany(@RequestBody Company company) {
-        Company createdCompany = companyService.createCompany(company);
+    public ResponseEntity<CompanyDTO> createCompany(@RequestBody CompanyDTO companyDTO) {
+        CompanyDTO createdCompany = companyService.createCompany(companyDTO);
         return new ResponseEntity<>(createdCompany, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Company> updateCompany(@PathVariable UUID id, @RequestBody Company company) {
-        Company updatedCompany = companyService.updateCompany(id, company);
+    public ResponseEntity<CompanyDTO> updateCompany(@PathVariable UUID id, @RequestBody CompanyDTO companyDTO) {
+        CompanyDTO updatedCompany = companyService.updateCompany(id, companyDTO);
         return new ResponseEntity<>(updatedCompany, HttpStatus.OK);
     }
 
@@ -43,26 +45,26 @@ public class CompanyController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Company>> getAllCompanies() {
-        List<Company> companies = companyService.getAllCompanies();
+    public ResponseEntity<List<CompanyDTO>> getAllCompanies() {
+        List<CompanyDTO> companies = companyService.getAllCompanies();
         return new ResponseEntity<>(companies, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Company> getCompanyById(@PathVariable UUID id) {
-        Company company = companyService.getCompanyById(id);
+    public ResponseEntity<CompanyDTO> getCompanyById(@PathVariable UUID id) {
+        CompanyDTO company = companyService.getCompanyById(id);
         return new ResponseEntity<>(company, HttpStatus.OK);
     }
 
     @GetMapping("/industry/{industry}")
-    public ResponseEntity<List<Company>> getCompaniesByIndustry(@PathVariable String industry) {
-        List<Company> companies = companyService.getCompaniesByIndustry(industry);
+    public ResponseEntity<List<CompanyDTO>> getCompaniesByIndustry(@PathVariable String industry) {
+        List<CompanyDTO> companies = companyService.getCompaniesByIndustry(industry);
         return new ResponseEntity<>(companies, HttpStatus.OK);
     }
 
     @GetMapping("/size/{size}")
-    public ResponseEntity<List<Company>> getCompaniesBySize(@PathVariable String size) {
-        List<Company> companies = companyService.getCompaniesBySize(size);
+    public ResponseEntity<List<CompanyDTO>> getCompaniesBySize(@PathVariable String size) {
+        List<CompanyDTO> companies = companyService.getCompaniesBySize(size);
         return new ResponseEntity<>(companies, HttpStatus.OK);
     }
 }

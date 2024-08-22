@@ -1,8 +1,7 @@
 package com.burnettcodeworks.resume.controller;
 
-import com.burnettcodeworks.resume.entity.Skill;
+import com.burnettcodeworks.resume.dto.SkillDTO;
 import com.burnettcodeworks.resume.service.SkillService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,18 +20,21 @@ import java.util.UUID;
 @RequestMapping("/skills")
 public class SkillController {
 
-    @Autowired
-    private SkillService skillService;
+    private final SkillService skillService;
+
+    public SkillController(SkillService skillService) {
+        this.skillService = skillService;
+    }
 
     @PostMapping
-    public ResponseEntity<Skill> createSkill(@RequestBody Skill skill) {
-        Skill createdSkill = skillService.createSkill(skill);
+    public ResponseEntity<SkillDTO> createSkill(@RequestBody SkillDTO skillDTO) {
+        SkillDTO createdSkill = skillService.createSkill(skillDTO);
         return new ResponseEntity<>(createdSkill, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Skill> updateSkill(@PathVariable UUID id, @RequestBody Skill skill) {
-        Skill updatedSkill = skillService.updateSkill(id, skill);
+    public ResponseEntity<SkillDTO> updateSkill(@PathVariable UUID id, @RequestBody SkillDTO skillDTO) {
+        SkillDTO updatedSkill = skillService.updateSkill(id, skillDTO);
         return new ResponseEntity<>(updatedSkill, HttpStatus.OK);
     }
 
@@ -43,14 +45,14 @@ public class SkillController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Skill>> getAllSkills() {
-        List<Skill> skills = skillService.getAllSkills();
+    public ResponseEntity<List<SkillDTO>> getAllSkills() {
+        List<SkillDTO> skills = skillService.getAllSkills();
         return new ResponseEntity<>(skills, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Skill> getSkillById(@PathVariable UUID id) {
-        Skill skill = skillService.getSkillById(id);
+    public ResponseEntity<SkillDTO> getSkillById(@PathVariable UUID id) {
+        SkillDTO skill = skillService.getSkillById(id);
         return new ResponseEntity<>(skill, HttpStatus.OK);
     }
 }

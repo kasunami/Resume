@@ -1,6 +1,6 @@
 package com.burnettcodeworks.resume.controller;
 
-import com.burnettcodeworks.resume.entity.ExperienceSummary;
+import com.burnettcodeworks.resume.dto.ExperienceSummaryDTO;
 import com.burnettcodeworks.resume.service.ExperienceSummaryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/experience-summary")
+@RequestMapping("/experience-summaries")
 public class ExperienceSummaryController {
 
     private final ExperienceSummaryService experienceSummaryService;
@@ -27,14 +27,14 @@ public class ExperienceSummaryController {
     }
 
     @PostMapping
-    public ResponseEntity<ExperienceSummary> createExperienceSummary(@RequestBody ExperienceSummary experienceSummary) {
-        ExperienceSummary createdExperienceSummary = experienceSummaryService.createExperienceSummary(experienceSummary);
+    public ResponseEntity<ExperienceSummaryDTO> createExperienceSummary(@RequestBody ExperienceSummaryDTO experienceSummaryDTO) {
+        ExperienceSummaryDTO createdExperienceSummary = experienceSummaryService.createExperienceSummary(experienceSummaryDTO);
         return new ResponseEntity<>(createdExperienceSummary, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ExperienceSummary> updateExperienceSummary(@PathVariable UUID id, @RequestBody ExperienceSummary experienceSummary) {
-        ExperienceSummary updatedExperienceSummary = experienceSummaryService.updateExperienceSummary(id, experienceSummary);
+    public ResponseEntity<ExperienceSummaryDTO> updateExperienceSummary(@PathVariable UUID id, @RequestBody ExperienceSummaryDTO experienceSummaryDTO) {
+        ExperienceSummaryDTO updatedExperienceSummary = experienceSummaryService.updateExperienceSummary(id, experienceSummaryDTO);
         return new ResponseEntity<>(updatedExperienceSummary, HttpStatus.OK);
     }
 
@@ -45,14 +45,14 @@ public class ExperienceSummaryController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ExperienceSummary>> getAllExperienceSummaries() {
-        List<ExperienceSummary> experienceSummaries = experienceSummaryService.getAllExperienceSummaries();
+    public ResponseEntity<List<ExperienceSummaryDTO>> getAllExperienceSummaries() {
+        List<ExperienceSummaryDTO> experienceSummaries = experienceSummaryService.getAllExperienceSummaries();
         return new ResponseEntity<>(experienceSummaries, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ExperienceSummary> getExperienceSummaryById(@PathVariable UUID id) {
-        ExperienceSummary experienceSummary = experienceSummaryService.getExperienceSummaryById(id);
+    public ResponseEntity<ExperienceSummaryDTO> getExperienceSummaryById(@PathVariable UUID id) {
+        ExperienceSummaryDTO experienceSummary = experienceSummaryService.getExperienceSummaryById(id);
         return new ResponseEntity<>(experienceSummary, HttpStatus.OK);
     }
 }

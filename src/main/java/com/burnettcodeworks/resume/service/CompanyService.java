@@ -1,6 +1,8 @@
 package com.burnettcodeworks.resume.service;
 
+import com.burnettcodeworks.resume.dto.CompanyDTO;
 import com.burnettcodeworks.resume.entity.Company;
+import com.burnettcodeworks.resume.mapper.CompanyMapper;
 import com.burnettcodeworks.resume.repository.CompanyRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,32 +18,34 @@ public class CompanyService {
         this.companyRepository = companyRepository;
     }
 
-    public Company createCompany(Company company) {
-        return companyRepository.save(company);
+    public CompanyDTO createCompany(CompanyDTO companyDTO) {
+        Company company = CompanyMapper.toEntity(companyDTO);
+        return CompanyMapper.toDTO(companyRepository.save(company));
     }
 
-    public Company updateCompany(UUID id, Company company) {
+    public CompanyDTO updateCompany(UUID id, CompanyDTO companyDTO) {
+        Company company = CompanyMapper.toEntity(companyDTO);
         company.setId(id);
-        return companyRepository.save(company);
+        return CompanyMapper.toDTO(companyRepository.save(company));
     }
 
     public void deleteCompany(UUID id) {
         companyRepository.deleteById(id);
     }
 
-    public List<Company> getAllCompanies() {
-        return companyRepository.findAll();
+    public List<CompanyDTO> getAllCompanies() {
+        return CompanyMapper.toDTOList(companyRepository.findAll());
     }
 
-    public Company getCompanyById(UUID id) {
-        return companyRepository.findById(id).orElse(null);
+    public CompanyDTO getCompanyById(UUID id) {
+        return companyRepository.findById(id).map(CompanyMapper::toDTO).orElse(null);
     }
 
-    public List<Company> getCompaniesByIndustry(String industry) {
-        return companyRepository.findByIndustry(industry);
+    public List<CompanyDTO> getCompaniesByIndustry(String industry) {
+        return CompanyMapper.toDTOList(companyRepository.findByIndustry(industry));
     }
 
-    public List<Company> getCompaniesBySize(String size) {
-        return companyRepository.findBySize(size);
+    public List<CompanyDTO> getCompaniesBySize(String size) {
+        return CompanyMapper.toDTOList(companyRepository.findBySize(size));
     }
 }

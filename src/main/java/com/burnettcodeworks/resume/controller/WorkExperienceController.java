@@ -1,6 +1,6 @@
 package com.burnettcodeworks.resume.controller;
 
-import com.burnettcodeworks.resume.entity.WorkExperience;
+import com.burnettcodeworks.resume.dto.WorkExperienceDTO;
 import com.burnettcodeworks.resume.service.WorkExperienceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/work-experience")
+@RequestMapping("/work-experiences")
 public class WorkExperienceController {
 
     private final WorkExperienceService workExperienceService;
@@ -27,14 +27,14 @@ public class WorkExperienceController {
     }
 
     @PostMapping
-    public ResponseEntity<WorkExperience> createWorkExperience(@RequestBody WorkExperience workExperience) {
-        WorkExperience createdWorkExperience = workExperienceService.createWorkExperience(workExperience);
+    public ResponseEntity<WorkExperienceDTO> createWorkExperience(@RequestBody WorkExperienceDTO workExperienceDTO) {
+        WorkExperienceDTO createdWorkExperience = workExperienceService.createWorkExperience(workExperienceDTO);
         return new ResponseEntity<>(createdWorkExperience, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<WorkExperience> updateWorkExperience(@PathVariable UUID id, @RequestBody WorkExperience workExperience) {
-        WorkExperience updatedWorkExperience = workExperienceService.updateWorkExperience(id, workExperience);
+    public ResponseEntity<WorkExperienceDTO> updateWorkExperience(@PathVariable UUID id, @RequestBody WorkExperienceDTO workExperienceDTO) {
+        WorkExperienceDTO updatedWorkExperience = workExperienceService.updateWorkExperience(id, workExperienceDTO);
         return new ResponseEntity<>(updatedWorkExperience, HttpStatus.OK);
     }
 
@@ -45,14 +45,14 @@ public class WorkExperienceController {
     }
 
     @GetMapping
-    public ResponseEntity<List<WorkExperience>> getAllWorkExperiences() {
-        List<WorkExperience> workExperiences = workExperienceService.getAllWorkExperiences();
+    public ResponseEntity<List<WorkExperienceDTO>> getAllWorkExperiences() {
+        List<WorkExperienceDTO> workExperiences = workExperienceService.getAllWorkExperiences();
         return new ResponseEntity<>(workExperiences, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<WorkExperience> getWorkExperienceById(@PathVariable UUID id) {
-        WorkExperience workExperience = workExperienceService.getWorkExperienceById(id);
+    public ResponseEntity<WorkExperienceDTO> getWorkExperienceById(@PathVariable UUID id) {
+        WorkExperienceDTO workExperience = workExperienceService.getWorkExperienceById(id);
         return new ResponseEntity<>(workExperience, HttpStatus.OK);
     }
 }

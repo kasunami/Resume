@@ -1,6 +1,8 @@
 package com.burnettcodeworks.resume.service;
 
+import com.burnettcodeworks.resume.dto.WorkExperienceDTO;
 import com.burnettcodeworks.resume.entity.WorkExperience;
+import com.burnettcodeworks.resume.mapper.WorkExperienceMapper;
 import com.burnettcodeworks.resume.repository.WorkExperienceRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,24 +18,28 @@ public class WorkExperienceService {
         this.workExperienceRepository = workExperienceRepository;
     }
 
-    public WorkExperience createWorkExperience(WorkExperience workExperience) {
-        return workExperienceRepository.save(workExperience);
+    public WorkExperienceDTO createWorkExperience(WorkExperienceDTO workExperienceDTO) {
+        WorkExperience workExperience = WorkExperienceMapper.toEntity(workExperienceDTO);
+        return WorkExperienceMapper.toDTO(workExperienceRepository.save(workExperience));
     }
 
-    public WorkExperience updateWorkExperience(UUID id, WorkExperience workExperience) {
-        workExperience.setId(id);
-        return workExperienceRepository.save(workExperience);
+    public WorkExperienceDTO updateWorkExperience(UUID id, WorkExperienceDTO workExperienceDTO) {
+        workExperienceDTO.setId(id);
+        WorkExperience updatedWorkExperience = WorkExperienceMapper.toEntity(workExperienceDTO);
+        return WorkExperienceMapper.toDTO(workExperienceRepository.save(updatedWorkExperience));
     }
 
     public void deleteWorkExperience(UUID id) {
         workExperienceRepository.deleteById(id);
     }
 
-    public List<WorkExperience> getAllWorkExperiences() {
-        return workExperienceRepository.findAll();
+    public List<WorkExperienceDTO> getAllWorkExperiences() {
+        return WorkExperienceMapper.toDTOList(workExperienceRepository.findAll());
     }
 
-    public WorkExperience getWorkExperienceById(UUID id) {
-        return workExperienceRepository.findById(id).orElse(null);
+    public WorkExperienceDTO getWorkExperienceById(UUID id) {
+        return workExperienceRepository.findById(id)
+                .map(WorkExperienceMapper::toDTO)
+                .orElse(null);
     }
 }
